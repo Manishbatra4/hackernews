@@ -1,13 +1,14 @@
 import axios from "axios";
-
-const baseURL = "https://hacker-news.firebaseio.com/v0/"
-const newStoriesId = `${baseURL}newstories.json`
-const storyURL = `${baseURL}item/`
+import { newStoriesId, storyURL } from "../helper/config"
 
 const getStoriesId = async () => {
-    const result = await axios.get(newStoriesId).then(data => data);
-
-    return result;
+    return await axios.get(newStoriesId).then(({data}) => data);
 }
 
-export  { baseURL, newStoriesId, storyURL, getStoriesId }
+const getStory = async (storyId) => {
+    return await axios.get(`${storyURL + storyId}.json`)
+        .then(({data}) => data)
+        .catch(error => console.log(error));
+}
+
+export {getStoriesId, getStory}
